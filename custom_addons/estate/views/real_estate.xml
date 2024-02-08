@@ -39,8 +39,11 @@
         <field name="arch" type="xml">
             <form string="Lost Reason">
                 <header>
-                    <button name="sold_property" type="object" string="Sold" icon="fa-solid fa-tag"/>
-                    <button name="cancel_property" type="object" string="Cancel" icon="fa-solid fa-ban"/>
+                    <button name="sold_property" type="object" string="Sold" icon="fa-solid fa-tag"
+                    invisible="state == '4'"/>
+                    <button name="cancel_property" type="object" string="Cancel" icon="fa-solid fa-ban"
+                    invisible="state == '4'"/>                
+                    <field name="state" widget="statusbar"/>
                 </header>
                 <sheet>
                     <div class="oe_title">
@@ -50,24 +53,22 @@
                     </div>
 
                     <group>
-                        <field name="tag_ids" widget="many2many_tags" string="Tags"/>
+                        <field name="tag_ids" widget="many2many_tags" string="Tags"
+                        options="{'create_text': True,'color_field': 'color', 'no_edit_color': False}"
+                        />
                     </group>
 
                     <group>
-                        <group>
+                        <!-- <group>
                             <field name="state"/>
+                        </group> -->
+                        <group>
+                            <field name="property_type_id" string="Property Type"
+                            options="{'no_create': True}"
+                            />
                         </group>
                         <group>
                             <field name="expected_price"/>
-                        </group>
-                    </group>
-
-                    <group>
-                        <group>
-                            <field name="property_type_id" string="Property Type"/>
-                        </group>
-                        <group>
-                            <field name="best_price" string="Best Offer"/>
                         </group>
                     </group>
 
@@ -80,9 +81,12 @@
                         </group>
                     </group>
 
-                    <group>
+                    <group>                        
                         <group>
                             <field name="available_from"/>
+                        </group>
+                        <group>
+                            <field name="best_price" string="Best Offer"/>
                         </group>
                     </group>
 
@@ -95,8 +99,8 @@
                                 <field name="facades"/>
                                 <field name="garage"/>
                                 <field name="garden"/>
-                                <field name="garden_area"/>
-                                <field name="garden_orientation"/>
+                                <field name="garden_area" invisible="garden == False"/>
+                                <field name="garden_orientation" invisible="garden == False"/>
                                 <field name="total_area"/>
                             </group>
                         </page>

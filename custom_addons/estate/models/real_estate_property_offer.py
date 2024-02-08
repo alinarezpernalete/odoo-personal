@@ -4,6 +4,7 @@ from dateutil.relativedelta import relativedelta
 class RealEstatePropertyOffer(models.Model):
     _name = "real_estate_property_offer"
     _description = "Real Estate Property Offer"
+    _order = "price desc"
 
     price = fields.Float()
     status = fields.Selection([('1','Accepted'), ('2','Refused')], copy=False)
@@ -27,11 +28,12 @@ class RealEstatePropertyOffer(models.Model):
             else:
                 record.validity = (record.date_deadline - fields.Date.today()).days
 
-    @api.depends("property_id.selling_price", "property_id.buyer")
+    # @api.depends("property_id.selling_price", "property_id.buyer", "property_id.state")
     def accept_action(self):
         self.status = "1"
         self.property_id.selling_price = self.price
         self.property_id.buyer = self.partner_id
+        self.property_id.state = "3"
 
     def refuse_action(self):
         self.status = "2"

@@ -4,6 +4,7 @@ from dateutil.relativedelta import relativedelta
 class RealEstateModel(models.Model):
     _name = "real_estate_model"
     _description = "Real Estate Model"
+    _order = "id desc"
 
     title = fields.Char()
     description = fields.Char(size=300, trim=True)
@@ -87,3 +88,11 @@ class RealEstateModel(models.Model):
                     raise exceptions.UserError("The selling price cannot be lower than 90 percent of the expected price.")
             else:
                 raise exceptions.UserError("This property sale is canceled.")
+            
+    @api.model
+    def get_real_estate_info(self):
+        real_estate = self.browse(2)
+        return {
+            'title': real_estate.title,
+            'description': real_estate.description,
+        }
