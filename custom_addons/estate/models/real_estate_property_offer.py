@@ -1,4 +1,4 @@
-from odoo import api, fields, models
+from odoo import api, fields, models, exceptions
 from dateutil.relativedelta import relativedelta
 
 class RealEstatePropertyOffer(models.Model):
@@ -28,7 +28,6 @@ class RealEstatePropertyOffer(models.Model):
             else:
                 record.validity = (record.date_deadline - fields.Date.today()).days
 
-    # @api.depends("property_id.selling_price", "property_id.buyer", "property_id.state")
     def accept_action(self):
         self.status = "1"
         self.property_id.selling_price = self.price
