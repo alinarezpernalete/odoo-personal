@@ -1,4 +1,4 @@
-from odoo import api, fields, models, exceptions
+from odoo import api, fields, models, http
 from dateutil.relativedelta import relativedelta
 
 class RealEstatePropertyOffer(models.Model):
@@ -38,3 +38,14 @@ class RealEstatePropertyOffer(models.Model):
         self.status = "2"
         self.property_id.selling_price = 0
         self.property_id.buyer = 1
+
+    @http.route('/my_controller/show_message', type='http', auth='user')
+    def some_function(self):
+        # Create a new record using the model object's create method
+        # new_record = self.env['real_estate_property_offer'].create({
+        #     'price': 199.00,
+        #     # ... other field values
+        # })
+        # Do something with the newly created record (optional)
+        # return new_record
+        self.env.user.flash_message('Success!', "NEW")
