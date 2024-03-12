@@ -17,7 +17,7 @@
         <field name="name">Real Estate Tree</field>
         <field name="model">real_estate_model</field>
         <field name="arch" type="xml">
-            <tree string="Channel">
+            <tree string="Channel" decoration-success="state == '2'" decoration-bf="state == '3'">
                 <field name="title"/>
                 <field name="postcode"/>
                 <field name="bedrooms"/>
@@ -25,6 +25,7 @@
                 <field name="expected_price"/>
                 <field name="selling_price"/>
                 <field name="available_from"/>
+                <field name="state"/>
             </tree>
         </field>
     </record>
@@ -83,7 +84,7 @@
 
                     <group>                        
                         <group>
-                            <field name="available_from"/>
+                            <field name="available_from" optional="True" invisible="True"/>
                         </group>
                         <group>
                             <field name="best_price" string="Best Offer"/>
