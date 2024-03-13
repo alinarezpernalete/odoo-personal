@@ -7,7 +7,7 @@ class RealEstatePropertyOffer(models.Model):
     _order = "price desc"
 
     price = fields.Float()
-    status = fields.Selection([('1','Accepted'), ('2','Refused')], copy=False)
+    status = fields.Selection([('0','Non-Status'), ('1','Accepted'), ('2','Refused')], default='0', copy=False)
     partner_id = fields.Many2one("res.partner", required=True)
     property_id = fields.Many2one("real_estate_model", required=True)
     validity = fields.Integer(default=7)
@@ -38,14 +38,3 @@ class RealEstatePropertyOffer(models.Model):
         self.status = "2"
         self.property_id.selling_price = 0
         self.property_id.buyer = 1
-
-    @http.route('/my_controller/show_message', type='http', auth='user')
-    def some_function(self):
-        # Create a new record using the model object's create method
-        # new_record = self.env['real_estate_property_offer'].create({
-        #     'price': 199.00,
-        #     # ... other field values
-        # })
-        # Do something with the newly created record (optional)
-        # return new_record
-        self.env.user.flash_message('Success!', "NEW")
