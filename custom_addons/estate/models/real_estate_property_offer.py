@@ -7,11 +7,12 @@ class RealEstatePropertyOffer(models.Model):
     _order = "price desc"
 
     price = fields.Float()
-    status = fields.Selection([('0','Non-Status'), ('1','Accepted'), ('2','Refused')], default='0', copy=False)
+    status = fields.Selection([('1','Accepted'), ('2','Refused')], copy=False)
     partner_id = fields.Many2one("res.partner", required=True)
     property_id = fields.Many2one("real_estate_model", required=True)
     validity = fields.Integer(default=7)
     date_deadline = fields.Date(compute="_computed_date_deadline", inverse="_computed_date_deadline_inverse")
+    property_type = fields.Char(related="property_id.property_type_id.name", store=True) # Kind of INNER JOIN, which makes a union between them : real_estate_property_offer -> real_estate -> property_type_id
 
     @api.depends("create_date","validity","date_deadline")
     def _computed_date_deadline(self):
@@ -36,5 +37,10 @@ class RealEstatePropertyOffer(models.Model):
 
     def refuse_action(self):
         self.status = "2"
-        self.property_id.selling_price = 0
         self.property_id.buyer = 1
+
+    def create(self, vals_list):
+        result = super().create(vals_list)
+        for rec in result:
+            rec.property_id.state = '2'
+        return result
