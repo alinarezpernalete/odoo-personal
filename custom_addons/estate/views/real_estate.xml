@@ -6,6 +6,7 @@
     <record id="real_estate_action" model="ir.actions.act_window">
         <field name="name">Real Estate</field>
         <field name="res_model">real_estate_model</field>
+        <field name="context">{'search_default_state': True}</field>
         <field name="view_mode">tree,form</field>
     </record>
 
@@ -17,10 +18,10 @@
         <field name="name">Real Estate Tree</field>
         <field name="model">real_estate_model</field>
         <field name="arch" type="xml">
-            <tree string="Channel" decoration-success="(state == '2' or state == '3')"
-            decoration-bf="state == '3'" decoration-muted="state == '4'">
+            <tree string="Channel" decoration-success="(state == '2' or state == '3')" decoration-bf="state == '3'" decoration-muted="state == '4'">
                 <field name="title"/>
                 <field name="postcode"/>
+                <field name="tag_ids" string="Tags" widget="many2many_tags" />
                 <field name="bedrooms"/>
                 <field name="living_area"/>
                 <field name="expected_price"/>
@@ -136,7 +137,7 @@
                 <field name="postcode" string="Postcode"/>
                 <field name="expected_price" string="Expected Price"/>
                 <field name="bedrooms" string="Bedrooms"/>
-                <field name="living_area" string="Living Area (sqm)"/>
+                <field name="living_area" string="Living Area (sqm)" filter_domain="['|', ('living_area', '>', self), ('living_area', '=', self)]"/>
                 <field name="facades" string="Facades"/>
                 
                 <separator/> 
@@ -151,7 +152,7 @@
 
                 <group expand="1" string="Group By">
                     <filter string="Postcode" name="postcode" context="{'group_by':'postcode', 'residual_visible':True}"/>    
-                    <filter string="Available properties" name="state" context="{'group_by':'state', 'residual_visible':True}"/>
+                    <filter string="Available properties" name="group_by_state" context="{'group_by':'state', 'residual_visible':True}"/>
                 </group>
             </search>
         </field>
