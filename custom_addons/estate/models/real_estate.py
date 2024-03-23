@@ -88,11 +88,9 @@ class RealEstateModel(models.Model):
                     raise exceptions.UserError("The selling price cannot be lower than 90 percent of the expected price.")
             else:
                 raise exceptions.UserError("This property sale is canceled.")
-            
-    # @api.model
-    # def get_real_estate_info(self):
-    #     real_estate = self.browse(2)
-    #     return {
-    #         'title': real_estate.title,
-    #         'description': real_estate.description,
-    #     }
+
+    @api.ondelete(at_uninstall=False)        
+    def check_deletion(self):
+        for rec in self:
+            if int(rec.state) > 2 and int(rec.state) < 5:
+                raise exceptions.ValidationError("Cannot delete a property with a offer accepted or sold.")
