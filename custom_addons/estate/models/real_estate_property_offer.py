@@ -1,4 +1,4 @@
-from odoo import api, fields, models, http
+from odoo import api, fields, models, exceptions
 from dateutil.relativedelta import relativedelta
 
 class RealEstatePropertyOffer(models.Model):
@@ -40,7 +40,13 @@ class RealEstatePropertyOffer(models.Model):
         self.property_id.buyer = 1
 
     def create(self, vals_list):
-        result = super().create(vals_list)
-        for rec in result:
-            rec.property_id.state = '2'
+        # result es el registro como tal
+        # vals_list es la lista de los datos dentro del registro
+        result = super().create(vals_list) 
+        result.property_id.state = '2'
+        price = result.price
+
+        if float(price) < float(result.property_id.best_price):
+            raise exceptions.ValidationError("You cannot offer lower than: " + str(result.property_id.best_price))    
+        
         return result
