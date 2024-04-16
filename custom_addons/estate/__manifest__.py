@@ -14,6 +14,5 @@
         'views/real_estate_property_tag.xml',
         'views/real_estate_menu.xml',
     ],
-    'depends': ['base'],
     'license': 'LGPL-3',
 }
