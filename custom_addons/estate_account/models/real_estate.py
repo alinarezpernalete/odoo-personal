@@ -10,8 +10,7 @@ class RealEstateModel(models.Model):
                 {
                     'partner_id': buyer,
                     'move_type': 'out_invoice',
-                    'journal_id': '1',
-                    'currency_id': '1'
+                    'journal_id': 1
                 }
             )
         # return super(RealEstateModel, self).sold_property()
