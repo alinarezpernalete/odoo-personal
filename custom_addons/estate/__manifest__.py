@@ -1,7 +1,8 @@
 {
     'name': 'Real Estate',
     'depends': [
-        'base'
+        'base',
+        'auth_totp'
     ],
     'application': True,
     'author': 'ALinarezPernalete',
