@@ -5,9 +5,9 @@
 
     <record id="real_estate_action" model="ir.actions.act_window">
         <field name="name">Real Estate</field>
-        <field name="res_model">real_estate_model</field>
+        <field name="res_model">real_estate</field>
         <field name="context">{'search_default_state': True}</field>
-        <field name="view_mode">tree,form</field>
+        <field name="view_mode">kanban,tree,form</field>
     </record>
 
     <!-- *Acceso desde el menú de arriba* -->
@@ -16,7 +16,7 @@
 
     <record id="real_estate_view_tree" model="ir.ui.view">
         <field name="name">Real Estate Tree</field>
-        <field name="model">real_estate_model</field>
+        <field name="model">real_estate</field>
         <field name="arch" type="xml">
             <tree string="Channel" decoration-success="(state == '2' or state == '3')" decoration-bf="state == '3'" decoration-muted="state == '4'">
                 <field name="title"/>
@@ -27,8 +27,32 @@
                 <field name="expected_price"/>
                 <field name="selling_price"/>
                 <field name="available_from"/>
-                <field name="state" invisible="True"/>
+                <field name="state"/>
             </tree>
+        </field>
+    </record>
+
+    <record id="real_estate_view_kanban" model="ir.ui.view">
+        <field name="name">Real Estate Kanban</field>
+        <field name="model">real_estate</field>
+        <field name="arch" type="xml">
+            <kanban>
+                <field name="state"/>
+                <field name="expected_price"/>
+                <templates>
+                    <t t-name="kanban-box">
+                        <div class="oe_kanban_global_click">
+                            <b> <field name="title"/> </b>
+                            <div t-if="record.state.raw_value == '1'">
+                                This is new!
+                            </div>
+                            <group>
+                                Expected Price: <field name="expected_price"/>
+                            </group>
+                        </div>
+                    </t> 
+                </templates>
+            </kanban>
         </field>
     </record>
 
@@ -38,7 +62,7 @@
 
     <record id="real_estate_view_tree_form" model="ir.ui.view">
         <field name="name">Real Estate Form</field>
-        <field name="model">real_estate_model</field>
+        <field name="model">real_estate</field>
         <field name="arch" type="xml">
             <form string="Lost Reason">
                 <header>
@@ -130,7 +154,7 @@
 
     <record id="real_estate_search" model="ir.ui.view">
         <field name="name">Real Estate Search</field>
-        <field name="model">real_estate_model</field>
+        <field name="model">real_estate</field>
         <field name="arch" type="xml">
             <search string="Real Estate">
                 <field name="title" string="Title"/>
