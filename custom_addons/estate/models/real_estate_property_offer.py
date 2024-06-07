@@ -9,7 +9,7 @@ class RealEstatePropertyOffer(models.Model):
     price = fields.Float()
     status = fields.Selection([('1','Accepted'), ('2','Refused')], copy=False)
     partner_id = fields.Many2one("res.partner", required=True)
-    property_id = fields.Many2one("real_estate_model", required=True)
+    property_id = fields.Many2one("real_estate", required=True)
     validity = fields.Integer(default=7)
     date_deadline = fields.Date(compute="_computed_date_deadline", inverse="_computed_date_deadline_inverse")
     property_type = fields.Char(related="property_id.property_type_id.name", store=True) # Kind of INNER JOIN, which makes a union between them : real_estate_property_offer -> real_estate -> property_type_id
