@@ -1,7 +1,7 @@
 from odoo import fields, models, Command
 
 class RealEstateModel(models.Model):
-    _inherit = 'real_estate_model'
+    _inherit = 'real_estate'
 
     def sold_property(self):
         #super().sold_property()
