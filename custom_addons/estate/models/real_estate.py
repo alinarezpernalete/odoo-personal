@@ -1,9 +1,9 @@
 from odoo import api, fields, models, exceptions
 from dateutil.relativedelta import relativedelta
 
-class RealEstateModel(models.Model):
-    _name = "real_estate_model"
-    _description = "Real Estate Model"
+class RealEstate(models.Model):
+    _name = "real_estate"
+    _description = "Real Estate"
     _order = "id desc"
 
     title = fields.Char()
